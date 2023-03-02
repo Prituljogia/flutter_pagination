@@ -1,5 +1,5 @@
 name: flutter_pagination
-description: A new Flutter package project.
+description: A new Flutter package .
 version: 0.0.1
 homepage:
 
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  pull_to_refresh: ^2.0.0
+
 
 dev_dependencies:
   flutter_test:

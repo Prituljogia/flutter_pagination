@@ -25,8 +25,8 @@ class PaginationList<T> extends StatefulWidget {
           height: 25,
           width: 25,
           child: const CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-            backgroundColor: Colors.amber,
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+            backgroundColor: Colors.blue,
           ),
         ),
       ),
@@ -35,8 +35,8 @@ class PaginationList<T> extends StatefulWidget {
       height: 25,
       width: 25,
       child: const CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-        backgroundColor: Colors.amber,
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+        backgroundColor: Colors.blue,
       ),
     ),
   }) : super(key: key);

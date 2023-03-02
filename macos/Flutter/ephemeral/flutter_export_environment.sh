@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
 export "FLUTTER_ROOT=/Users/ztlab99/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/ztlab99/AndroidStudioProjects/flutter_pagination"
+export "FLUTTER_APPLICATION_PATH=/Users/ztlab99/Documents/flutter_pagination"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=0.0.1"
