@@ -22,9 +22,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,9 +42,9 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: PaginationList<User>(
-        physics: const AlwaysScrollableScrollPhysics(),
+        physics: AlwaysScrollableScrollPhysics(),
 
-        shrinkWrap: true,
+        shrinkWrap: false,
         padding: const EdgeInsets.only(
           left: 5,
           right: 5,
@@ -73,6 +78,111 @@ class HomePage extends StatelessWidget {
             faker.person.firstName(),
             faker.person.lastName(),
             faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
+          ), User(
+            faker.person.prefix(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            faker.company.position(),
           ),
           User(
             faker.person.prefix(),
@@ -91,7 +201,7 @@ class HomePage extends StatelessWidget {
   Future<List<User>> pageFetch(int offset) async {
     final Faker faker = Faker();
     final List<User> upcomingList = List.generate(
-      15,
+      20,
           (int index) => User(
         faker.person.prefix(),
         faker.person.firstName(),

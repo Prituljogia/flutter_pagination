@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-
 typedef PaginationBuilder<T> = Future<List<T>> Function(int currentListSize);
 
 class PaginationList<T> extends StatefulWidget {
@@ -63,7 +62,7 @@ class PaginationListState<T> extends State<PaginationList<T>>
   final List _itemList = <T>[];
   dynamic _error;
   final StreamController<PageState> _streamController =
-  StreamController<PageState>();
+      StreamController<PageState>();
 
   @override
   void initState() {
@@ -78,7 +77,7 @@ class PaginationListState<T> extends State<PaginationList<T>>
     return StreamBuilder<PageState>(
       stream: _streamController.stream,
       initialData:
-      (_itemList.isEmpty) ? PageState.firstLoad : PageState.pageLoad,
+          (_itemList.isEmpty) ? PageState.firstLoad : PageState.pageLoad,
       builder: (BuildContext context, AsyncSnapshot<PageState> snapshot) {
         if (!snapshot.hasData) {
           return widget.onLoading;
@@ -115,7 +114,7 @@ class PaginationListState<T> extends State<PaginationList<T>>
           padding: widget.padding,
           itemCount: _itemList.length,
           separatorBuilder: (BuildContext context, int index) =>
-          widget.separatorWidget,
+              widget.separatorWidget,
         );
       },
     );
@@ -123,9 +122,8 @@ class PaginationListState<T> extends State<PaginationList<T>>
 
   void fetchPageData({int offset = 0}) {
     widget.pageFetch(offset - widget.initialData.length).then(
-          (List<T> list) {
-        if (_itemList.contains(list)) {
-        }
+      (List<T> list) {
+        if (_itemList.contains(list)) {}
         list = list;
         if (list.isEmpty) {
           if (offset == 0) {
