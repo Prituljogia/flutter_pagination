@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+
 typedef PaginationBuilder<T> = Future<List<T>> Function(int currentListSize);
 
 class PaginationList<T> extends StatefulWidget {
@@ -15,7 +16,7 @@ class PaginationList<T> extends StatefulWidget {
     this.shrinkWrap = false,
     this.padding = const EdgeInsets.all(0),
     this.initialData = const [],
-    required this.physics,
+    this.physics,
     this.separatorWidget = const SizedBox(height: 0, width: 0),
     this.onPageLoading = const Center(
       child: Padding(
@@ -24,8 +25,8 @@ class PaginationList<T> extends StatefulWidget {
           height: 25,
           width: 25,
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-            backgroundColor: Colors.blue,
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+            backgroundColor: Colors.amber,
           ),
         ),
       ),
@@ -34,8 +35,8 @@ class PaginationList<T> extends StatefulWidget {
       height: 25,
       width: 25,
       child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-        backgroundColor: Colors.blue,
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+        backgroundColor: Colors.amber,
       ),
     ),
   }) : super(key: key);
@@ -45,7 +46,7 @@ class PaginationList<T> extends StatefulWidget {
   final EdgeInsets padding;
   final List<T> initialData;
   final PaginationBuilder<T> pageFetch;
-  final ScrollPhysics physics;
+  final ScrollPhysics? physics;
   final Widget Function(BuildContext, T) itemBuilder;
   final Widget onEmpty;
   final Widget Function(dynamic) onError;
@@ -59,15 +60,15 @@ class PaginationList<T> extends StatefulWidget {
 
 class PaginationListState<T> extends State<PaginationList<T>>
     with AutomaticKeepAliveClientMixin<PaginationList<T>> {
-  final List<T> _itemList = <T>[];
+  final List _itemList = <T>[];
   dynamic _error;
   final StreamController<PageState> _streamController =
-      StreamController<PageState>();
+  StreamController<PageState>();
 
   @override
   void initState() {
     _itemList.addAll(widget.initialData);
-    if (widget.initialData.isNotEmpty) _itemList.add(null as T);
+    //if (widget.initialData.isNotEmpty) _itemList.add(null);
     super.initState();
   }
 
@@ -77,7 +78,7 @@ class PaginationListState<T> extends State<PaginationList<T>>
     return StreamBuilder<PageState>(
       stream: _streamController.stream,
       initialData:
-          (_itemList.isEmpty) ? PageState.firstLoad : PageState.pageLoad,
+      (_itemList.isEmpty) ? PageState.firstLoad : PageState.pageLoad,
       builder: (BuildContext context, AsyncSnapshot<PageState> snapshot) {
         if (!snapshot.hasData) {
           return widget.onLoading;
@@ -114,7 +115,7 @@ class PaginationListState<T> extends State<PaginationList<T>>
           padding: widget.padding,
           itemCount: _itemList.length,
           separatorBuilder: (BuildContext context, int index) =>
-              widget.separatorWidget,
+          widget.separatorWidget,
         );
       },
     );
@@ -122,9 +123,8 @@ class PaginationListState<T> extends State<PaginationList<T>>
 
   void fetchPageData({int offset = 0}) {
     widget.pageFetch(offset - widget.initialData.length).then(
-      (List<T> list) {
-        if (_itemList.contains(null)) {
-          _itemList.remove(null);
+          (List<T> list) {
+        if (_itemList.contains(list)) {
         }
         list = list;
         if (list.isEmpty) {
@@ -137,7 +137,6 @@ class PaginationListState<T> extends State<PaginationList<T>>
         }
 
         _itemList.addAll(list);
-        _itemList.add(null as T);
         _streamController.add(PageState.pageLoad);
       },
       onError: (dynamic error) {
@@ -146,7 +145,7 @@ class PaginationListState<T> extends State<PaginationList<T>>
           _streamController.add(PageState.firstError);
         } else {
           if (!_itemList.contains(null)) {
-            _itemList.add(null as T);
+            _itemList.add(null);
           }
           _streamController.add(PageState.pageError);
         }
