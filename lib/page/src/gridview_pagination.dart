@@ -8,14 +8,14 @@ class GridViewPagination extends StatefulWidget {
   final double childAspectRatio;
   final OnNextPage onNextPage;
   final Widget Function(BuildContext context, int) itemBuilder;
-  final Widget Function(BuildContext context) progressBuilder;
+  final Widget Function(BuildContext context)? progressBuilder;
 
   const GridViewPagination({super.key,
     required this.itemCount,
     required this.childAspectRatio,
     required this.itemBuilder,
-    required this.onNextPage,
-    required this.progressBuilder,
+     required this.onNextPage,
+     this.progressBuilder,
   });
 
   @override
@@ -61,7 +61,7 @@ class GridViewPaginationState extends State<GridViewPagination> {
           ),
           if (isLoading)
             SliverToBoxAdapter(
-              child: widget.progressBuilder.call(context),
+              child: widget.progressBuilder?.call(context),
             ),
         ],
       ),
