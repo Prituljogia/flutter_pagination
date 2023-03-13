@@ -1,3 +1,4 @@
+import 'package:example/listitem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pagination/flutter_pagination.dart';
 import 'package:http/http.dart' as http;
@@ -12,72 +13,69 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final int page = 0;
 
-static const _currentpage=1;
-  late int totalpages;
 
-  List<Datum> passengers = [];
   final PagingController<int, Datum> _pagingController =
       PagingController(firstPageKey: 0);
-
-  Future<bool> getPassangersData(int pageKey) async {
-    final Uri uri = Uri.parse(
-        "https://api.instantwebtools.net/v1/passenger?page=$_currentpage&size=10");
-    final response = await http.get(uri);
-
-    if (response.statusCode == 200) {
-      final result = passengersDataFromJson(response.body);
-      totalpages = result.totalPages;
-      print(response.body);
-      setState(() {});
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   @override
   void initState() {
     _pagingController.addPageRequestListener((pageKey) {
-      getPassangersData(pageKey);
+      _getPassangersData(pageKey);
     });
+
     super.initState();
+  }
+
+  Future<void> _getPassangersData(int pageKey) async {
+    try {
+      final Uri uri = Uri.parse(
+          "https://api.instantwebtools.net/v1/passenger?page=$page&size=10");
+
+      final response = await http.get(uri);
+      if (response.statusCode == 200) {
+        passengersDataFromJson(response.body);
+        print(response.body);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
-      body:Container(
+        appBar: AppBar(
+          backgroundColor: Colors.green,
+          title:
+              Text("PassangerData Api ", style: TextStyle(color: Colors.white)),
+        ),
+        body:  RefreshIndicator(
 
-          child: RefreshIndicator(
-            onRefresh: () => Future.sync(
-                  () => _pagingController.refresh(),
-            ),
-            child: Container(
-              child: PagedListView<int, Datum>.separated(
-                pagingController: _pagingController,
-                builderDelegate: PagedChildBuilderDelegate<Datum>(
-                    animateTransitions: true,
-                    itemBuilder: (context, int, index) {
-                      final passenger = passengers[index];
 
-                      return ListTile(
-                        leading: CircleAvatar(
-                            radius: 25,
-                            child: Image.network(
-                              passenger.airline.first.logo,
-                              fit: BoxFit.cover,
-                            )),
-                        title: Text(passenger.trips.toString()),
-                        subtitle: Text(passenger.airline.first.country),
-                      );
-                    }),
-                separatorBuilder: (context, index) => const Divider(),
-              ),
-            ),
-          )
-      )
-       );
+          onRefresh: () => Future.sync(
+                 () => _pagingController.refresh(),
+                  ),
+       child: PagedListView<int,Datum>(
+          pagingController: _pagingController,
+          builderDelegate: PagedChildBuilderDelegate<Datum>(
+            itemBuilder: (context, item, index) =>  ListItem(
+              passenger: item,
+            ) ,
+          ),
+        )
+        )
 
+
+
+
+          );
   }
+   @override
+    void dispose() {
+      _pagingController.dispose();
+      super.dispose();
+    }
 }
